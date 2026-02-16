@@ -1,0 +1,36 @@
+services:
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: crypto_db
+    ports:
+      - "5432:5432"
+
+  etl:
+    build: .
+    command: python src/main.py
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_NAME: crypto_db
+      DB_USER: admin
+      DB_PASSWORD: admin123
+      DB_PORT: 5432
+
+  dashboard:
+    build: .
+    command: streamlit run dashboard.py --server.port=8501 --server.address=0.0.0.0
+    depends_on:
+      - db
+    ports:
+      - "8501:8501"
+    environment:
+      DB_HOST: db
+      DB_NAME: crypto_db
+      DB_USER: admin
+      DB_PASSWORD: admin123
+      DB_PORT: 5432
