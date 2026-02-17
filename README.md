@@ -1,73 +1,156 @@
-🚀 Crypto Market Data Engineering Pipeline
-📌 Overview
+# Crypto Market Intelligence Platform
 
-This project implements a production-style data engineering pipeline that:
+Automated Data Engineering Pipeline with PostgreSQL, Docker, and Real-Time Analytics
 
-Extracts cryptocurrency market data from CoinGecko API
+---
 
-Stores raw JSON data
+## Overview
 
-Transforms data using pandas
+This project is a fully containerized data engineering platform that ingests live cryptocurrency market data, stores it in PostgreSQL, and exposes analytics through an interactive dashboard.
 
-Loads into PostgreSQL (Dockerized)
+The system demonstrates production-style architecture including:
 
-Maintains:
+- Scheduled ETL pipeline
+- Historical and current snapshot tables
+- UPSERT logic
+- Containerized infrastructure
+- Modular Python package structure
+- Interactive analytics layer
+- Docker Compose orchestration
 
-Historical table
+---
 
-Current snapshot table (UPSERT logic)
+## Architecture
 
-Automates daily execution using cron
+External Crypto API  
+        ↓  
+ETL Scheduler (Python)  
+        ↓  
+PostgreSQL (Data Warehouse)  
+        ↓  
+Streamlit Intelligence Dashboard  
+        ↓  
+Docker Network  
 
-Includes a Streamlit dashboard
+---
 
-🏗 Architecture
-CoinGecko API
-        ↓
-Raw JSON Storage
-        ↓
-AWS S3 (optional)
-        ↓
-Transform (pandas)
-        ↓
-PostgreSQL (Docker)
-        ↓
-Historical Table
-        ↓
-Current Snapshot Table (UPSERT)
-        ↓
-Streamlit Dashboard
+## Tech Stack
 
-🛠 Tech Stack
+- Python 3.11
+- PostgreSQL 15
+- Docker & Docker Compose
+- Streamlit
+- Plotly
+- Pandas
+- psycopg2
+- GitHub Actions (CI Ready)
 
-Python
+---
 
-Docker
+## Data Model
 
-PostgreSQL
+### 1. crypto_market (Historical Table)
 
-Pandas
+Stores time-series historical data for each coin.
 
-psycopg2
+Columns:
+- coin_name
+- symbol
+- price
+- market_cap
+- volume
+- price_change_24h
+- extracted_at
 
-boto3
+### 2. crypto_market_current (Snapshot Table)
 
-Streamlit
+Maintains the latest state of each asset using UPSERT logic.
 
-Cron
+---
 
-AWS EC2
+## Key Features
 
-🔥 Features
+### Automated ETL Scheduler
+Runs continuously inside Docker using a scheduler loop.
 
-Automated daily ingestion
+### Historical Tracking
+Every ETL run appends to the historical table.
 
-Rate-limit handling
+### UPSERT Logic
+Ensures snapshot table always reflects latest state.
 
-Production logging
+### Advanced Analytics Dashboard
+Includes:
+- Executive summary metrics
+- Market dominance
+- Volatility analysis
+- Liquidity metrics
+- Top gainers/losers
+- Historical price trends
 
-Environment variable configuration
+---
 
-UPSERT logic for current market state
+## Business Metrics Implemented
 
-Historical time-series tracking
+- Market Dominance (%)
+- Volatility (Std Dev of 24h change)
+- Liquidity Score (Volume / Market Cap)
+- Top 3 Concentration Ratio
+- Historical Price Trend Analysis
+
+---
+
+## How To Run Locally
+
+### 1. Clone Repository
+git clone https://github.com/your-username/crypto-data-engineering-pipeline.git
+cd crypto-data-engineering-pipeline
+
+### 2. Build & Start Services
+docker-compose build
+docker-compose up -d
+
+### 3. Run ETL Once (Optional)
+docker-compose run etl
+
+### 4. Open Dashboard
+http://localhost:8501
+
+
+---
+
+## Container Services
+
+- crypto-postgres
+- crypto-etl (Scheduled pipeline)
+- crypto-dashboard
+
+---
+
+## Production Design Considerations
+
+- Modular package structure (src/)
+- Proper import resolution
+- Environment-based configuration
+- Database initialization scripts
+- Persistent volume storage
+- Clean separation of services
+
+---
+
+## Future Enhancements
+
+- AWS EC2 deployment
+- RDS migration
+- CI/CD auto-deployment
+- Nginx reverse proxy
+- HTTPS configuration
+- Docker Hub publishing
+- Infrastructure as Code
+
+---
+
+## Author
+
+Louella Respuesto  
+Data Engineering & Analytics
