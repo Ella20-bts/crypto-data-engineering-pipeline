@@ -103,7 +103,7 @@ Includes:
 ## How To Run Locally
 
 ### 1. Clone Repository
-git clone https://github.com/your-username/crypto-data-engineering-pipeline.git
+git clone https://github.com/your-username/crypto-data-engineering-pipeline.git</br>
 cd crypto-data-engineering-pipeline
 
 ### 2. Build & Start Services
